@@ -1,0 +1,61 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+group = 'com.deerlili.spring.cloud'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+// 定义变量
+ext {
+	springCloudVersion = 'Greenwich.SR6'
+}
+
+repositories {
+	// mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+	// 阿里云仓库
+	maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+}
+
+dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// 该依赖用于编译阶段
+
+	compile group: 'org.projectlombok', name: 'lombok'
+
+	// HttpClient
+	compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
+
+	// Redis
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis'
+	
+	// Quartz
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-quartz'
+	
+	// Eureka Client
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '2.1.4.RELEASE'
+	
+	// Feign
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
+
+	// 该以来用于测试阶段
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+// 配置Spring Cloud
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
